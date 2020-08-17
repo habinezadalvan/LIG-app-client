@@ -12,7 +12,7 @@ const PeopleStack = createStackNavigator();
 
   export const PeopleStackScreen = ({ navigation }) => {
     return (
-      <PeopleStack.Navigator>
+      <PeopleStack.Navigator >
         <PeopleStack.Screen
           name="People"
           component={People}
@@ -56,7 +56,6 @@ const PeopleStack = createStackNavigator();
             navigation.push("Details", { name: "React native school" })
           }
         />
-        <Button style={styles.button} title="Drawer" onPress={() => navigation.toggleDrawer()}/>
   
       </ScreenContainer>
     );

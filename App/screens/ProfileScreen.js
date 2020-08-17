@@ -13,7 +13,7 @@ const ProfileStack = createStackNavigator();
 
 export const ProfileStackScreen = ({navigation}) => {
     return (
-      <ProfileStack.Navigator>
+      <ProfileStack.Navigator >
         <ProfileStack.Screen name="Profile" component={Profile}  options={() => ({ 
             headerLeft: () => (
               <FontIcons name="bars" style={{marginLeft: 25}} size={25} color="gray" onPress={() => navigation.toggleDrawer()}/>

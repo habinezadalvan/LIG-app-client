@@ -38,7 +38,6 @@ export const TabScreen = () => (
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      tabBarOptions={{}}
     >
       <Tabs.Screen
         name="Home"
