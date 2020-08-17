@@ -20,11 +20,9 @@ export const LoginScreen = () => {
 
 }
 
-export default function Login({navigation}) {
-    return (
-       <ScreenContainer>
+const Login = ({navigation}) => (
+    <ScreenContainer>
            <Text>Login page</Text>
            <Button title="Login" onPress={() => navigation.push('home')}/>
        </ScreenContainer>
-    )
-}
+)

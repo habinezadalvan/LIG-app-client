@@ -16,11 +16,9 @@ export const WelcomeScreen = () => {
     )
 }
 
-export default function Welcome({navigation}) {
-    return (
-        <ScreenContainer>
-            <Text>Welcome page</Text>
-            <Button title="Login" onPress={() => navigation.push('login page')}/>
-        </ScreenContainer>
-    )
-}
+const  Welcome = ({navigation})  => (
+    <ScreenContainer>
+        <Text>Welcome page</Text>
+        <Button title="Login" onPress={() => navigation.push('login page')}/>
+    </ScreenContainer>
+)
