@@ -41,7 +41,7 @@ export const DrawerContent = (props) => {
                     marginTop: 10,
                   }}
                 >
-                  <Avatar.Image size={50} />
+                  <Avatar.Image size={50} source={require('../../assets/logoBlue.png')} />
                   <View style={{ marginLeft: 15, flexDirection: "column" }}>
                     <Title style={styles.title}>Kanyengoga Emmanuel</Title>
                     <Caption>Admin</Caption>

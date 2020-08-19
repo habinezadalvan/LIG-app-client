@@ -6,12 +6,8 @@ import { SignIn } from "../LoginScreen";
 const Stack = createStackNavigator();
 
 export const AuthStackScreens = () => (
-  <Stack.Navigator initialRouteName="welcome">
-    <Stack.Screen
-      name="welcome"
-      component={WelcomePage}
-      options={{ title: "" }}
-    />
+  <Stack.Navigator initialRouteName="welcome" headerMode="none">
+    <Stack.Screen name="welcome" component={WelcomePage}/>
     <Stack.Screen name="Login" component={SignIn} />
   </Stack.Navigator>
 );
