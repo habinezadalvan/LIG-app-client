@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -16,7 +16,6 @@ import Feather from "react-native-vector-icons/Feather";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {useTheme} from 'react-native-paper';
 import Database from '../fakedb/db';
-import { color } from "react-native-reanimated";
 
 
 export const SignIn = ({ navigation }) => {
@@ -141,6 +140,7 @@ export const SignIn = ({ navigation }) => {
                   style={[styles.textInpunt, {color: colors.text}]}
                   placeholder="Email"
                   autoCapitalize="none"
+                  
                   onChangeText={(val) => handleChangeInput(val)}
                   placeholderTextColor="#666"
                   onEndEditing={(e) => handleValidUserEmail(e.nativeEvent.text)}
@@ -212,13 +212,11 @@ export const SignIn = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View style={styles.lowerSection}>
-        <Animatable.View
-          animation="fadeInUpBig"
-          delay={1800}
+      {Platform.OS === 'ios' ? (<View style={styles.lowerSection}>
+        <View
           style={[styles.big_bubble, {backgroundColor: colors.background}]}
-        ></Animatable.View>
-      </View>
+        ></View>
+      </View>) : (<View></View>)}
     </View>
   );
 };
@@ -228,8 +226,7 @@ const { height } = Dimensions.get("screen");
 const logo_height = height * 0.1;
 
 const logo_container_height = height * 0.13;
-const big_bubble_height = height * 0.77;
-const small_bubble_height = height * 0.5;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -280,10 +277,10 @@ const styles = StyleSheet.create({
   },
 
   big_bubble: {
-    height: big_bubble_height,
-    width: big_bubble_height,
+    height: 500,
+    width: 600,
     backgroundColor: "#eee",
-    borderRadius: 350,
+    borderRadius: 200,
     position: "absolute",
     right: -240,
     bottom: -350,
@@ -292,17 +289,6 @@ const styles = StyleSheet.create({
     shadowColor: "#0570C1",
     shadowRadius: 5,
   },
-  small_bubble: {
-    height: small_bubble_height,
-    width: small_bubble_height,
-    backgroundColor: "#0570C1",
-    borderRadius: 350,
-    position: "absolute",
-    left: -80,
-    bottom: -200,
-    zIndex: -2,
-  },
-
   text_header: {
     color: "#fff",
     fontWeight: "bold",
@@ -315,7 +301,7 @@ const styles = StyleSheet.create({
   },
 
   textInpunt: {
-    marginTop: Platform.OS === "ios" ? 0 : -12,
+   
     paddingLeft: 10,
     color: "#05375a",
     flexBasis: "82%",

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Dimensions, StyleSheet, StatusBar, Text } from "react-native";
+import { View, Dimensions, StyleSheet, StatusBar, Text, Platform } from "react-native";
 import { useTheme } from "react-native-paper";
 import CommonCustomButton from "../components/CommonCustomButton";
 import * as Animatable from "react-native-animatable";
@@ -34,19 +34,19 @@ export const WelcomePage = ({ navigation }) => {
           </Text>
         </View>
       </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.lowerSection}>
-        <Animatable.View animation="fadeInRight" style={styles.buttonStyle}>
+      <View style={styles.lowerSection}>
+        <View style={styles.buttonStyle}>
           <CommonCustomButton
             text="Get started"
             onPress={() => navigation.navigate("Login")}
             color="#0793FD"
             iconName="navigate-next"
           />
-        </Animatable.View>
+        </View>
         <View
           style={[styles.big_bubble, { backgroundColor: colors.background }]}
         ></View>
-      </Animatable.View>
+      </View>
     </View>
   );
 };
@@ -56,7 +56,6 @@ const { height } = Dimensions.get("screen");
 const logo_height = height * 0.17;
 
 const logo_container_height = height * 0.22;
-const big_bubble_height = height * 0.77;
 
 const styles = StyleSheet.create({
   container: {
@@ -119,10 +118,10 @@ const styles = StyleSheet.create({
     zIndex: 9,
   },
   big_bubble: {
-    height: big_bubble_height,
-    width: big_bubble_height,
+    height: 500 ,
+    width: 600,
     backgroundColor: "#eee",
-    borderRadius: 350,
+    borderRadius: 200,
     position: "absolute",
     right: -240,
     bottom: -280,
