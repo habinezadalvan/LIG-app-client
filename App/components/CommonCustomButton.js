@@ -1,13 +1,16 @@
 import React from 'react';
+import {useTheme} from 'react-native-paper';
 import {Text, TouchableOpacity, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function CommonCustomButton(props) {
 
+    const {colors} = useTheme();
+
     const content = (
         <View style={[styles.button, {backgroundColor: props.color}]}>
-            <Text style={styles.text}>{props.text}</Text>
-            <MaterialIcons name={props.iconName} size={25} color="white"/>
+            <Text style={[styles.text, {color: colors.background}]}>{props.text}</Text>
+            <MaterialIcons name={props.iconName} size={25} color={colors.background}/>
         </View>
     )
 

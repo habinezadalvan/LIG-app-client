@@ -9,6 +9,7 @@ import {
   Drawer,
   Switch,
   Title,
+  useTheme
 } from "react-native-paper";
 import MaterialIcons5 from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -17,14 +18,11 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {CreateAuthContext} from '../../context';
 
 export const DrawerContent = (props) => {
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-    const {signOut} = useContext(CreateAuthContext);
+    const paperTheme = useTheme();
+    const {signOut, changeTheme} = useContext(CreateAuthContext);
 
 
-    const changeTheme = () => {
-        setIsDarkTheme(!isDarkTheme);
-    }
     return (
         <View style={styles.drawerCOntent}>
           <DrawerContentScrollView {...props}>
@@ -88,7 +86,7 @@ export const DrawerContent = (props) => {
                 <TouchableRipple onPress={() => {changeTheme()}}>
                   <View style={styles.preference}>
                     <Text>Dark theme</Text>
-                    <View pointerEvents="none"><Switch value={isDarkTheme} /></View>
+                    <View pointerEvents="none"><Switch value={paperTheme.dark} /></View>
                   </View>
                 </TouchableRipple>
               </Drawer.Section>

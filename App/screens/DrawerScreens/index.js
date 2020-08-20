@@ -27,21 +27,3 @@ export const DrawerScreens = () => (
 )
 
 
-// screenOptions={({route}) => ({
-//     drawerIcon: ({size, color}) => {
-//         let iconName;
-//         if(route.name === 'Home'){
-//           iconName = 'md-home'
-//         } else if(route.name === 'Profile'){
-//           iconName='md-person';
-//         }else if(route.name === 'Events') {
-//           iconName="schedule";
-//           return <MaterialIcons name={iconName} size={size} color={color}/>
-//         }else if(route.name === 'Assets') {
-//           iconName="finance";
-//           return <MaterialIcons5 name={iconName} size={size} color={color}/>
-//         }
-
-//         return <Ionicons name={iconName} size={size} color={color}/>
-//       }
-//   })}

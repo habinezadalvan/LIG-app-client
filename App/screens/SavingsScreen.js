@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
+import {useTheme} from '@react-navigation/native';
 
 
 
@@ -29,8 +30,11 @@ export const SavingStackScreen = ({ navigation }) => (
   </SavingStack.Navigator>
 );
 
-const Savings = () => (
-  <ScreenContainer>
-    <Text>SAVINGS PAGE MAN</Text>
-  </ScreenContainer>
-);
+const Savings = () => {
+  const {colors} = useTheme();
+  return(
+    <ScreenContainer>
+      <Text style={{color: colors.text}}>SAVINGS PAGE MAN</Text>
+    </ScreenContainer>
+  );
+}

@@ -1,18 +1,20 @@
 import React from "react";
-import { Text, Button, StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
-
+import {useTheme} from '@react-navigation/native';
 import { Details } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ScreenContainer } from "./screens";
 import MemberCard from "../components/MemberCard";
 import { View } from "react-native-animatable";
 
 const PeopleStack = createStackNavigator();
 
 export const PeopleStackScreen = ({ navigation }) => {
+  const { colors} = useTheme();
   return (
-    <PeopleStack.Navigator>
+    <PeopleStack.Navigator screenOptions={{
+      headerTintColor: colors.text
+    }}>
       <PeopleStack.Screen
         name="People"
         component={People}
@@ -39,8 +41,11 @@ export const PeopleStackScreen = ({ navigation }) => {
 };
 
 export const People = ({ navigation }) => {
+  const {dark } = useTheme();
+
   return (
     <View>
+      <StatusBar barStyle={dark ? 'light-content' : 'dark-content'}/>
       <MemberCard
         onPress={() => navigation.push("Details", { name: "More info" })}
         position="Member"

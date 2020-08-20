@@ -1,22 +1,24 @@
 import React from "react";
-import {
-  View,
-  Dimensions,
-  StyleSheet,
-  StatusBar,
-  Text
-} from "react-native";
+import { View, Dimensions, StyleSheet, StatusBar, Text } from "react-native";
+import { useTheme } from "react-native-paper";
 import CommonCustomButton from "../components/CommonCustomButton";
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from "react-native-animatable";
 
 export const WelcomePage = ({ navigation }) => {
-  
+  const { colors, dark } = useTheme();
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#0793FD" barStyle="light-content"/>
+      <StatusBar barStyle={dark ? "dark-content" : "light-content"} />
       <View style={styles.upperSection}>
         <View style={styles.logoSubSection}>
-          <Animatable.View animation="pulse" duration={2000} style={styles.logoContainer}>
+          <Animatable.View
+            animation="pulse"
+            duration={2000}
+            style={[
+              styles.logoContainer,
+              { backgroundColor: colors.background },
+            ]}
+          >
             <Animatable.Image
               animation="bounceIn"
               duration={2000}
@@ -27,13 +29,13 @@ export const WelcomePage = ({ navigation }) => {
           </Animatable.View>
         </View>
         <View style={styles.welcomeSubSection}>
-          <Text  style={styles.paragraph}>
+          <Text style={[styles.paragraph, { color: colors.background }]}>
             Save and Grow everyday with L.I.G app!
           </Text>
         </View>
       </View>
-      <Animatable.View animation="fadeInUpBig"  style={styles.lowerSection}>
-        <Animatable.View animation="fadeInRight"  style={styles.buttonStyle}>
+      <Animatable.View animation="fadeInUpBig" style={styles.lowerSection}>
+        <Animatable.View animation="fadeInRight" style={styles.buttonStyle}>
           <CommonCustomButton
             text="Get started"
             onPress={() => navigation.navigate("Login")}
@@ -41,7 +43,9 @@ export const WelcomePage = ({ navigation }) => {
             iconName="navigate-next"
           />
         </Animatable.View>
-        <View style={styles.big_bubble}></View>
+        <View
+          style={[styles.big_bubble, { backgroundColor: colors.background }]}
+        ></View>
       </Animatable.View>
     </View>
   );
@@ -127,5 +131,4 @@ const styles = StyleSheet.create({
     shadowColor: "#0570C1",
     shadowRadius: 5,
   },
-
 });

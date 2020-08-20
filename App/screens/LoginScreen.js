@@ -7,18 +7,22 @@ import {
   View,
   TextInput,
   Alert,
+  StatusBar
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { CreateAuthContext } from "../context";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {useTheme} from 'react-native-paper';
 import Database from '../fakedb/db';
+import { color } from "react-native-reanimated";
 
 
 export const SignIn = ({ navigation }) => {
   const { login } = useContext(CreateAuthContext);
 
+  const {colors, dark} = useTheme();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -103,13 +107,14 @@ export const SignIn = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={dark ? 'dark-content' :  'light-content'}/>
       <View style={styles.upperSection}>
         <View style={styles.logoSubSection}>
           <View style={styles.logoSubSection}>
             <Animatable.View
               animation="pulse"
               duration={2000}
-              style={styles.logoContainer}
+              style={[styles.logoContainer, {backgroundColor: colors.background}]}
             >
               <Animatable.Image
                 animation="bounceIn"
@@ -123,45 +128,46 @@ export const SignIn = ({ navigation }) => {
         </View>
         <View style={styles.formSubSection}>
           <View style={styles.loginFormContainer}>
-            <Text style={styles.text_header}>Sign in</Text>
+            <Text style={[styles.text_header, {color: colors.background}]}>Sign in</Text>
             <View style={styles.inputFieldsContainer}>
-              <View style={styles.inputField}>
+              <View style={[styles.inputField, {backgroundColor: colors.background}]}>
                 <FontAwesome
                   style={{ marginLeft: 7 }}
                   name="user-o"
-                  color="#05375a"
+                  color={colors.text}
                   size={20}
                 />
                 <TextInput
-                  style={styles.textInpunt}
+                  style={[styles.textInpunt, {color: colors.text}]}
                   placeholder="Email"
                   autoCapitalize="none"
                   onChangeText={(val) => handleChangeInput(val)}
-                  // value={values.email}xx
+                  placeholderTextColor="#666"
                   onEndEditing={(e) => handleValidUserEmail(e.nativeEvent.text)}
                 />
                 {values.isvalidEmail ? (
                   <Feather name="check-circle" color="green" size={20} />
                 ) : (
-                  <Feather name="check-circle" color="#05375a" size={20} />
+                  <Feather name="check-circle" color={colors.text} size={20} />
                 )}
               </View>
               {values.isValidUserEmail ? null : (
                 <Animatable.View animation="fadeInLeft" duration={500}>
-                  <Text style={styles.validation}>Email must be in a valid format.</Text>
+                  <Text style={[styles.validation, {color: colors.text}]}>Email must be in a valid format.</Text>
                 </Animatable.View>
               )}
-              <View style={styles.inputField}>
+              <View style={[styles.inputField, {backgroundColor: colors.background}]}>
                 <Feather
                   style={{ marginLeft: 7 }}
                   name="lock"
-                  color="#05375a"
+                  color={colors.text}
                   size={20}
                 />
                 <TextInput
-                  style={styles.textInpunt}
+                  style={[styles.textInpunt, {color: colors.text}]}
                   secureTextEntry={values.isSecureIntry}
                   placeholder="Password"
+                  placeholderTextColor="#666"
                   autoCapitalize="none"
                   onChangeText={(val) => handlePasswordChange(val)}
                 />
@@ -169,35 +175,35 @@ export const SignIn = ({ navigation }) => {
                   <Feather
                     onPress={() => handleSecurePassword()}
                     name="eye"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                   />
                 ) : (
                   <Feather
                     onPress={() => handleSecurePassword()}
                     name="eye-off"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                   />
                 )}
               </View>
               {values.isValidPassword ? null:  (
                 <Animatable.View animation="fadeInLeft" duration={500}>
-                  <Text style={styles.validation}>Password must be 8 characters long.</Text>
+                  <Text style={[styles.validation, {color: colors.text}]}>Password must be 8 characters long.</Text>
                 </Animatable.View>
               ) }
             </View>
             <TouchableOpacity style={{ marginTop: 20 }}>
-              <Text style={{ color: "#eee", fontWeight: "bold" }}>
+              <Text style={[{ color: "#eee", fontWeight: "bold" }, {color: colors.background}]}>
                 Forgot password?
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => handleLoginFun(values.email, values.password)}
             >
-              <View style={styles.loginButton}>
+              <View style={[styles.loginButton, { borderColor: colors.background}]}>
                 <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                  style={[{ color: "white", fontWeight: "bold", fontSize: 18 }, {color: colors.background}]}
                 >
                   Login
                 </Text>
@@ -210,7 +216,7 @@ export const SignIn = ({ navigation }) => {
         <Animatable.View
           animation="fadeInUpBig"
           delay={1800}
-          style={styles.big_bubble}
+          style={[styles.big_bubble, {backgroundColor: colors.background}]}
         ></Animatable.View>
       </View>
     </View>
@@ -255,7 +261,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   loginFormContainer: {
-    width: "60%",
+    width: "80%",
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -271,7 +277,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowColor: "#0570C1",
     shadowRadius: 10,
-    marginTop: 20,
   },
 
   big_bubble: {
@@ -313,7 +318,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
     color: "#05375a",
-    flexBasis: "77%",
+    flexBasis: "82%",
   },
 
   inputFieldsContainer: {
@@ -325,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "100%",
     borderRadius: 50,
-    height: 33,
+    height: 45,
     marginTop: 30,
   },
   loginButton: {
@@ -337,11 +342,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#0793FD",
     borderColor: "white",
     borderWidth: 3,
-    height: 35,
+    height: 45,
     marginTop: 30,
   },
   validation: {
-    color: "#FF4A60",
+    color: "white",
     paddingTop: 1,
   },
 });

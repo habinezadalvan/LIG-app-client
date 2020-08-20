@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons5 from "react-native-vector-icons/MaterialCommunityIcons";
-
+import {useTheme} from 'react-native-paper';
 
 import {PeopleStackScreen} from '../PeopleScreen';
 import {ContributionStackScreen} from '../ContributionsScreen';
@@ -16,8 +16,12 @@ import {SearchStackScreen} from '../SearchStackScreen';
 const Tabs = createBottomTabNavigator();
 
 
-export const TabScreen = () => (
+export const TabScreen = () => {
+  return (
     <Tabs.Navigator
+      tabBarOptions={{
+        activeTintColor: '#0793FD'
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName;
@@ -49,4 +53,5 @@ export const TabScreen = () => (
       <Tabs.Screen name="Loans" component={LoanStackScreen} />
       <Tabs.Screen name="Search" component={SearchStackScreen} />
     </Tabs.Navigator>
-  );
+  )
+};
