@@ -6,7 +6,7 @@ import Feather from "react-native-vector-icons/Feather";
 export default function MemberCard({ onPress, position, firstname, lastname }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={{ alignSelf: "center" }}>
+      <View style={{ alignSelf: "center", width:'90%' }}>
         <View
           style={{
             flexDirection: "row",
@@ -33,9 +33,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     marginTop: 3,
+    width: '68%',
   },
   captionContainer: {
     flexDirection: "row",
+    width: '68%',
     justifyContent: "space-between",
   },
 });

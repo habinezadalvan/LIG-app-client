@@ -13,17 +13,46 @@ import {
   DefaultTheme as PaperDefaultTheme,
 } from "react-native-paper";
 
+import {ApolloClient} from 'apollo-client';
+import {HttpLink} from 'apollo-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloProvider} from 'react-apollo';
+
 import { DrawerScreens } from "./App/screens/DrawerScreens";
 import { AuthStackScreens } from "./App/screens/AuthScreens";
 import AsyncStorage from "@react-native-community/async-storage";
+import Spinner from "./App/components/Spinner";
+
+
+const createApolloClient = (token) => {
+  const link = new HttpLink({
+    uri: 'https://lig-app-api.herokuapp.com/graphql',
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
+
+  const cache = new InMemoryCache();
+
+  const client = new ApolloClient({
+    link,
+    cache
+  });
+
+  return client;
+}
+
 
 export default () => {
   // user authentication
+
+  const [client, setClient] = useState(null);
 
   const initialLoginState = {
     isLoading: true,
     userToken: null,
     email: null,
+    cleint: null
   };
 
   const loginReducer = (prevState, action) => {
@@ -89,11 +118,15 @@ export default () => {
       let userToken = null;
       try {
         userToken = await AsyncStorage.getItem("userToken");
+        const client = createApolloClient(userToken);
+
+        setClient(client);
+
       } catch (err) {
         console.log("err", err);
       }
       dispatch({ type: "RETRIVE_TOKEN", token: userToken });
-    }, 1000);
+    }, 2000);
   }, []);
 
   // Theme setting
@@ -108,6 +141,8 @@ export default () => {
       ...PaperDefaultTheme.colors,
       background: "#eee",
       text: "#333",
+      tagBg: '#e5e5e5',
+      tagText: '#666'
     },
   };
 
@@ -119,25 +154,25 @@ export default () => {
       ...PaperDarkTheme.colors,
       background: "#333",
       text: "#eee",
+      tagBg: '#e5e5e5',
+      tagText: '#666'
     },
   };
 
   const theme = isDarkTheme ? customDarkTheme : customDefaultTheme;
 
-  if (loginState.isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#0793FD" />
-      </View>
-    );
+  if (!client) {
+    return <Spinner/>
   }
   return (
-    <PaperProvider theme={theme}>
+    <ApolloProvider client={client} >
+      <PaperProvider theme={theme}>
       <CreateAuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
           {loginState.userToken ? <DrawerScreens /> : <AuthStackScreens />}
         </NavigationContainer>
       </CreateAuthContext.Provider>
     </PaperProvider>
+    </ApolloProvider>
   );
 };

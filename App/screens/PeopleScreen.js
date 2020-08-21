@@ -1,20 +1,25 @@
 import React from "react";
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, ScrollView } from "react-native";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from "@react-navigation/native";
 import { Details } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import MemberCard from "../components/MemberCard";
 import { View } from "react-native-animatable";
+import database from "../fakedb/db";
+import { FlatList } from "react-native-gesture-handler";
+import UserDetails from "./UserDetails";
 
 const PeopleStack = createStackNavigator();
 
 export const PeopleStackScreen = ({ navigation }) => {
-  const { colors} = useTheme();
+  const { colors } = useTheme();
   return (
-    <PeopleStack.Navigator screenOptions={{
-      headerTintColor: colors.text
-    }}>
+    <PeopleStack.Navigator
+      screenOptions={{
+        headerTintColor: colors.text,
+      }}
+    >
       <PeopleStack.Screen
         name="People"
         component={People}
@@ -33,7 +38,7 @@ export const PeopleStackScreen = ({ navigation }) => {
       />
       <PeopleStack.Screen
         name="Details"
-        component={Details}
+        component={UserDetails}
         options={({ route }) => ({ title: route.params.name })}
       />
     </PeopleStack.Navigator>
@@ -41,16 +46,25 @@ export const PeopleStackScreen = ({ navigation }) => {
 };
 
 export const People = ({ navigation }) => {
-  const {dark } = useTheme();
+  const { dark } = useTheme();
+
+  const listOfMembersFlat = ({ item }) => (
+    <MemberCard
+      key={item.id}
+      onPress={() => navigation.push("Details", { name: `${item.lastName} ${item.firstName}`, item })}
+      position={item.position}
+      firstname={item.firstName}
+      lastname={item.lastName}
+    />
+  );
 
   return (
     <View>
-      <StatusBar barStyle={dark ? 'light-content' : 'dark-content'}/>
-      <MemberCard
-        onPress={() => navigation.push("Details", { name: "More info" })}
-        position="Member"
-        firstname="Emmanuel"
-        lastname="Kanyengoga"
+      <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
+      <FlatList
+        data={database}
+        renderItem={listOfMembersFlat}
+        keyExtractor={(item) => String(item.id)}
       />
     </View>
   );
