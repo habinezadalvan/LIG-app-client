@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
@@ -15,12 +15,15 @@ import MaterialIcons5 from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import {CreateAuthContext} from '../../context';
+import { AuthContext } from "../../contexts/AuthContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 export const DrawerContent = (props) => {
 
     const paperTheme = useTheme();
-    const {signOut, changeTheme} = useContext(CreateAuthContext);
+
+    const {userSignOut} = useContext(AuthContext);
+    const {changeTheme} = useContext(ThemeContext);
 
 
     return (
@@ -100,7 +103,7 @@ export const DrawerContent = (props) => {
                 <MaterialIcons5 name="exit-to-app" color={color} size={size} />
               )}
               label="Logout"
-              onPress={() => signOut()}
+              onPress={() => userSignOut()}
             />
           </Drawer.Section>
         </View>

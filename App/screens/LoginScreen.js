@@ -10,16 +10,24 @@ import {
   StatusBar
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { CreateAuthContext } from "../context";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {useTheme} from 'react-native-paper';
-import Database from '../fakedb/db';
+import { graphql } from 'react-apollo';
 
 
-export const SignIn = ({ navigation }) => {
-  const { login } = useContext(CreateAuthContext);
+import {LOGIN_MUTATION} from '../graphql/mutations';
+import {AuthContext} from '../contexts/AuthContextProvider';
+
+
+
+// habinezadalvan@gmail.com
+// example@example.com
+// ASqw123!@#
+const SignIn = ({loginFuncFromProps}) => {
+
+  const {userLoggedIn} = useContext(AuthContext);
 
   const {colors, dark} = useTheme();
   const [values, setValues] = useState({
@@ -85,10 +93,7 @@ export const SignIn = ({ navigation }) => {
     }
   }
 
-  const handleLoginFun = (email, password) => {
-    const findUser = Database.filter(user => {
-      return email === user.email && password === user.password
-    });
+  const handleLoginFun = async (email, password) => {
     if (email.length === 0 ) {
       Alert.alert('Invalid input!', 'Email input field can not be empty!', [{text: 'Okey'}]);
       return;
@@ -97,11 +102,13 @@ export const SignIn = ({ navigation }) => {
       Alert.alert('Invalid input!', 'Password input field can not be empty!', [{text: 'Okey'}]);
       return;
     }
-    if (findUser.length === 0 ) {
-      Alert.alert('Invalid user!', 'Incorrect email or password!', [{text: 'Okey'}]);
+   try{
+    const {data: {userLogin: {accessToken}}} = await loginFuncFromProps(email, password);
+    userLoggedIn(accessToken);
+   }catch(err){
+       Alert.alert('Invalid user!', 'Incorrect email or password!', [{text: 'Okey'}]);
       return;
-    }
-    login(findUser);
+   }
   }
 
   return (
@@ -220,6 +227,15 @@ export const SignIn = ({ navigation }) => {
     </View>
   );
 };
+
+
+export default graphql(LOGIN_MUTATION, {
+  props: ({mutate}) => ({
+    loginFuncFromProps: (email, password) => mutate({
+      variables: {email, password}
+    })
+  })
+})(SignIn);
 
 const { height } = Dimensions.get("screen");
 

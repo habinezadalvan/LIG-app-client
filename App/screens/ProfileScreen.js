@@ -5,7 +5,7 @@ import FontIcons from "react-native-vector-icons/FontAwesome5";
 
 
 import {ScreenContainer} from './screens';
-import {CreateAuthContext} from '../context'
+import { AuthContext } from '../contexts/AuthContextProvider';
 
 
 const ProfileStack = createStackNavigator();
@@ -24,11 +24,11 @@ export const ProfileStackScreen = ({navigation}) => {
   };
 
   export const Profile = ({navigation}) => {
-    const {signOut} = useContext(CreateAuthContext);
+    const {userSignOut} = useContext(AuthContext);
     return(
         <ScreenContainer>
             <Text>Profile page</Text>
-            <Button title="Sign out" onPress={() => signOut()}/>
+            <Button title="Sign out" onPress={() => userSignOut()}/>
         </ScreenContainer>
     )
 }
