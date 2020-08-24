@@ -1,24 +1,23 @@
-import React, {useState, createContext} from 'react';
-import {storeUserToken, removeUserToken} from '../utils/tokenUtils';
-
+import React, { useState, createContext } from "react";
+import { storeUserToken, removeUserToken } from "../utils/tokenUtils";
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider(props) {
+  const [authState, setAuthState] = useState({ isLoggedIn: false });
 
-    const [authState, setAuthState] = useState({isLoggedIn: false, userToken: null});
+  const userLoggedIn = async (loggedIn, token) => {
+    setAuthState({ isLoggedIn: loggedIn });
+    if (loggedIn){
+        storeUserToken(token);
+    }else {
+       removeUserToken();
+    }
+  };
 
-    const userLoggedIn = async (token) => {
-        setAuthState({isLoggedIn: true});
-        await storeUserToken(token);
-    }
-    const userSignOut = async () => {
-        setAuthState({isLoggedIn: false});
-        await removeUserToken();
-    }
-    return (
-       <AuthContext.Provider value={{authState, userLoggedIn, userSignOut}}>
-           {props.children}
-       </AuthContext.Provider>
-    )
+  return (
+    <AuthContext.Provider value={{ authState, userLoggedIn }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 }

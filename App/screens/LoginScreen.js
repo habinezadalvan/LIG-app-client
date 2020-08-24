@@ -21,10 +21,6 @@ import {LOGIN_MUTATION} from '../graphql/mutations';
 import {AuthContext} from '../contexts/AuthContextProvider';
 
 
-
-// habinezadalvan@gmail.com
-// example@example.com
-// ASqw123!@#
 const SignIn = ({loginFuncFromProps}) => {
 
   const {userLoggedIn} = useContext(AuthContext);
@@ -95,18 +91,18 @@ const SignIn = ({loginFuncFromProps}) => {
 
   const handleLoginFun = async (email, password) => {
     if (email.length === 0 ) {
-      Alert.alert('Invalid input!', 'Email input field can not be empty!', [{text: 'Okey'}]);
+      Alert.alert('Invalid input!', 'Email input field can not be empty!', [{text: 'Ok'}]);
       return;
     }
     if (password.length === 0 ) {
-      Alert.alert('Invalid input!', 'Password input field can not be empty!', [{text: 'Okey'}]);
+      Alert.alert('Invalid input!', 'Password input field can not be empty!', [{text: 'Ok'}]);
       return;
     }
    try{
     const {data: {userLogin: {accessToken}}} = await loginFuncFromProps(email, password);
-    userLoggedIn(accessToken);
+   return userLoggedIn(true, accessToken);
    }catch(err){
-       Alert.alert('Invalid user!', 'Incorrect email or password!', [{text: 'Okey'}]);
+       Alert.alert('Invalid user!', `${err.message.split(':')[1]}`, [{text: 'Ok'}]);
       return;
    }
   }

@@ -1,8 +1,5 @@
 import React from 'react';
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons5 from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 
@@ -11,7 +8,7 @@ import {TabScreen} from '../TabsScreens';
 import {ProfileStackScreen} from '../ProfileScreen';
 import {EventStackScreen} from '../EventsScreen';
 import {AssetStackScreen} from '../AssetsScreen';
-import{DrawerContent} from './DrawerContent';
+import   DrawerContent from './DrawerContent';
 
 
 const Drawer = createDrawerNavigator();

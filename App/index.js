@@ -47,7 +47,7 @@ const App = () => {
       if (token) {
         setIsLoggedIn(true);
       }
-      return token;
+      return;
     })();
   }, []);
 

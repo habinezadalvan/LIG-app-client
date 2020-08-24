@@ -18,13 +18,16 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
-export const DrawerContent = (props) => {
+ const DrawerContent = (props) => {
 
     const paperTheme = useTheme();
 
-    const {userSignOut} = useContext(AuthContext);
+    const {userLoggedIn} = useContext(AuthContext);
     const {changeTheme} = useContext(ThemeContext);
 
+    const signOut = () => {
+      return userLoggedIn()
+    }
 
     return (
         <View style={styles.drawerCOntent}>
@@ -103,12 +106,15 @@ export const DrawerContent = (props) => {
                 <MaterialIcons5 name="exit-to-app" color={color} size={size} />
               )}
               label="Logout"
-              onPress={() => userSignOut()}
+              onPress={() => signOut()}
             />
           </Drawer.Section>
         </View>
       )
 };
+
+
+export default DrawerContent;
 
 const styles = StyleSheet.create({
   drawerCOntent: {
