@@ -23,7 +23,9 @@ export default function ThemeContextProvider(props) {
       background: "#eee",
       text: "#333",
       tagBg: '#e5e5e5',
-      tagText: '#666'
+      tagText: '#666',
+      black: '#000',
+      placeholder: '#999999'
     },
   };
 
@@ -36,7 +38,9 @@ export default function ThemeContextProvider(props) {
       background: "#333",
       text: "#eee",
       tagBg: '#e5e5e5',
-      tagText: '#666'
+      tagText: '#666',
+      black: '#000',
+      placeholder: '#999999'
     },
   };
 

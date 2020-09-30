@@ -4,7 +4,11 @@ import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import { Caption } from "react-native-paper";
 import Tag from "../components/Tag";
 
-export default function UserDetails({ route }) {
+export default function UserDetails({
+  route: {
+    params: { item },
+  },
+}) {
   const { colors, dark } = useTheme();
   return (
     <ScrollView>
@@ -13,7 +17,7 @@ export default function UserDetails({ route }) {
           <Image
             resizeMode="contain"
             style={styles.image}
-            source={require("../assets/logoBlue.png")}
+            source={item.avatar || require("../assets/logoBlue.png")}
           />
           <View
             style={[
@@ -26,12 +30,12 @@ export default function UserDetails({ route }) {
               },
             ]}
           >
-            <Caption style={styles.caption}>{route.params.item.role}</Caption>
+            <Caption style={styles.caption}>{item.userRole.name === 'admin' ? 'Admin' : 'User'}</Caption>
 
-            <Caption style={styles.caption}>{route.params.item.email}</Caption>
+            <Caption style={styles.caption}>{item.email}</Caption>
 
             <Caption style={styles.caption}>
-              {route.params.item.phoneNumber}
+              {item.phoneNo}
             </Caption>
           </View>
         </View>
@@ -45,37 +49,48 @@ export default function UserDetails({ route }) {
               justifyContent: "space-evenly",
             }}
           >
-            <Tag text="Active" color="#0793FD" textColor="white" />
             <Tag
-              text={route.params.item.position}
+              text={`${
+                item.accountStatus === "disactivated"
+                  ? "Disactivated"
+                  : "Active"
+              }`}
+              color={`${
+                item.accountStatus === "disactivated" ? "#444" : "#0793FD"
+              }`}
+              textColor={`${
+                item.accountStatus === "disactivated" ? "#666" : "white"
+              }`}
+            />
+            <Tag
+              text={item.userPosition.name}
               color="#0793FD"
               textColor="white"
             />
           </View>
           <View style={styles.otherTags}>
             <Tag
-              text="3 Loans"
+               text={`${item.userLoans.length} Loan(s)`}
               color={dark ? colors.backdrop : colors.tagBg}
               textColor={dark ? colors.text : colors.tagText}
             />
             <Tag
-              text="13 Contributions"
+              text={`${item.userContributions.length} Contribution(s)`}
               color={dark ? colors.backdrop : colors.tagBg}
               textColor={dark ? colors.text : colors.tagText}
             />
             <Tag
-              text="Savings:
-              717000 rwf"
+              text={`Savings: ${item.userSavings ? item.userSavings.amount : 0} frw`}
               color={dark ? colors.backdrop : colors.tagBg}
               textColor={dark ? colors.text : colors.tagText}
             />
             <Tag
-              text="0 Reports"
+              text={`${item.userReports.length} Report(s)`}
               color={dark ? colors.backdrop : colors.tagBg}
               textColor={dark ? colors.text : colors.tagText}
             />
             <Tag
-              text="0 Events"
+              text={`${item.userEvents.length} Event(s)`}
               color={dark ? colors.backdrop : colors.tagBg}
               textColor={dark ? colors.text : colors.tagText}
             />

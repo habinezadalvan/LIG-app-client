@@ -6,6 +6,8 @@ query Me{
     me{
       userName
       email
+      firstName
+      lastName
       avatar{
         file
       }
@@ -38,3 +40,43 @@ query Me{
     }
   }
 `;
+
+
+export const FETCH_ALL_USERS = gql`
+query allUsers($createdAt: String){
+  users(createdAt: $createdAt ){
+     id
+     firstName
+   lastName
+   accountStatus
+   email
+   phoneNo
+   userLoans{
+    amount
+  }
+   userEvents{
+    startTime
+  }
+   userReports{
+    title
+  }
+   userContributions{
+    amount
+  }
+   userSavings{
+    amount
+  }
+   userPosition{
+     name
+   }
+   userRole{
+     name
+   }
+   avatar{
+     id
+     file
+   }
+   }
+ }
+
+`
